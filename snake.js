@@ -2,7 +2,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Game constants
-const boxSize = 20; // Size of each cell in the grid
+const boxSize = 10; // Size of each cell in the grid
 let snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
 let food = { x: Math.floor(Math.random() * 20) * boxSize, y: Math.floor(Math.random() * 20) * boxSize };
 let direction = "RIGHT";
