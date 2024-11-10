@@ -1,6 +1,5 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-const resetButton = document.getElementById("resetButton");
 
 // Game constants
 let boxSize = 20;
@@ -82,6 +81,7 @@ function drawGame() {
     if (snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
         clearInterval(game);
         alert("Game Over! Score: " + score);
+        setTimeout(init, 500); // Restart the game after 0.5 seconds
     }
 }
 
@@ -94,9 +94,6 @@ function collision(head, array) {
     }
     return false;
 }
-
-// Reset game when reset button is clicked
-resetButton.addEventListener("click", init);
 
 // Start the game on page load
 init();
