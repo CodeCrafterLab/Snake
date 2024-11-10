@@ -2,7 +2,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Game constants
-let boxSize = 10;
+let boxSize = 20;
 let snake;
 let food;
 let direction;
@@ -26,11 +26,12 @@ function init() {
     game = setInterval(drawGame, 100);
 }
 
-// Spawn food at a random position
+// Spawn food at the right side of the screen
 function spawnFood() {
     food = {
-        x: Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize,
-        y: Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize
+        x: canvas.width, // Start at the right edge of the screen
+        y: Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize,
+        speed: 5 // Set speed of movement to the left
     };
 }
 
@@ -53,9 +54,15 @@ function drawGame() {
         ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
     }
 
-    // Draw food
+    // Draw and move food to the left
     ctx.fillStyle = "red";
     ctx.fillRect(food.x, food.y, boxSize, boxSize);
+    food.x -= food.speed; // Move food to the left
+
+    // Reset food to the right side if it goes off-screen on the left
+    if (food.x + boxSize < 0) {
+        spawnFood();
+    }
 
     // Move the snake
     let snakeX = snake[0].x;
@@ -66,9 +73,9 @@ function drawGame() {
     if (direction === "RIGHT") snakeX += boxSize;
 
     // Check for collision with food
-    if (snakeX === food.x && snakeY === food.y) {
+    if (Math.abs(snakeX - food.x) < boxSize && Math.abs(snakeY - food.y) < boxSize) {
         score++;
-        spawnFood(); // Generate new food position
+        spawnFood(); // Generate new food at the right side again
     } else {
         snake.pop(); // Remove the tail
     }
@@ -83,6 +90,12 @@ function drawGame() {
         alert("Game Over! Score: " + score);
         setTimeout(init, 500); // Restart the game after 0.5 seconds
     }
+
+    // Draw the score in the top-right corner
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.textAlign = "right";
+    ctx.fillText("Score: " + score, canvas.width - 20, 30);
 }
 
 // Collision detection function
