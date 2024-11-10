@@ -1,12 +1,39 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+const resetButton = document.getElementById("resetButton");
 
 // Game constants
-const boxSize = 10; // Size of each cell in the grid
-let snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
-let food = { x: Math.floor(Math.random() * 20) * boxSize, y: Math.floor(Math.random() * 20) * boxSize };
-let direction = "RIGHT";
-let score = 0;
+let boxSize = 20;
+let snake;
+let food;
+let direction;
+let score;
+let game;
+
+// Initialize the game
+function init() {
+    // Set canvas to full screen
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Reset variables
+    snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
+    direction = "RIGHT";
+    score = 0;
+    spawnFood();
+
+    // Start the game loop
+    if (game) clearInterval(game); // Clear any previous game intervals
+    game = setInterval(drawGame, 100);
+}
+
+// Spawn food at a random position
+function spawnFood() {
+    food = {
+        x: Math.floor(Math.random() * (canvas.width / boxSize)) * boxSize,
+        y: Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize
+    };
+}
 
 // Control the snake
 document.addEventListener("keydown", changeDirection);
@@ -42,7 +69,7 @@ function drawGame() {
     // Check for collision with food
     if (snakeX === food.x && snakeY === food.y) {
         score++;
-        food = { x: Math.floor(Math.random() * 20) * boxSize, y: Math.floor(Math.random() * 20) * boxSize };
+        spawnFood(); // Generate new food position
     } else {
         snake.pop(); // Remove the tail
     }
@@ -68,5 +95,8 @@ function collision(head, array) {
     return false;
 }
 
-// Start the game loop
-let game = setInterval(drawGame, 100);
+// Reset game when reset button is clicked
+resetButton.addEventListener("click", init);
+
+// Start the game on page load
+init();
