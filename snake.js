@@ -97,10 +97,10 @@ function drawGame() {
     // Move the snake
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
-    if (direction === "UP") snakeY -= boxSize;
-    if (direction === "DOWN") snakeY += boxSize;
-    if (direction === "LEFT") snakeX -= boxSize;
-    if (direction === "RIGHT") snakeX += boxSize;
+    if (direction === "UP") snakeY -= boxSize/2;
+    if (direction === "DOWN") snakeY += boxSize/2;
+    if (direction === "LEFT") snakeX -= boxSize/2;
+    if (direction === "RIGHT") snakeX += boxSize/2;
 
     // Check for collision with food
     if (Math.abs(snakeX - food.x) < boxSize && Math.abs(snakeY - food.y) < boxSize) {
