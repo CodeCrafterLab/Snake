@@ -41,7 +41,9 @@ function init() {
     canvas.height = window.innerHeight;
 
     // Reset variables
-    snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
+    //snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
+  snake = [{ x: boxSize/2, y:  boxSize/2 }];
+  
     direction = "RIGHT";
     score = 0;
     spawnFood();
