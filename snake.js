@@ -3,12 +3,11 @@
 // fruitImages.grapes.src = "Assets/grape.png";  // Replace with actual image URL
 // fruitImages.orange.src = "Assets/cheery.png";  // Replace with actual image URL
 // fruitImages.watermelon.src = "Assets/coconut.png";  // Replace with actual image URL
-
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Game constants
-let boxSize = 20;
+let boxSize = 40;
 let snake;
 let food;
 let direction;
@@ -47,7 +46,7 @@ function init() {
     canvas.height = window.innerHeight;
 
     // Reset variables
-    snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
+    snake = [{ x: 9 * boxSize, y: 9 * boxSize, image: null }]; // Head has no image
     direction = "RIGHT";
     score = 0;
     spawnFood();
@@ -87,13 +86,15 @@ function drawGame() {
             // Draw the head as a red box
             ctx.fillStyle = "red";
             ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
-        } else if (i === snake.length - 1 && snake.length > 1) {
-            // Draw the last segment (tail) with the food image
-            ctx.drawImage(food.fruit.image, snake[i].x, snake[i].y, boxSize, boxSize);
         } else {
-            // Draw other segments of the snake body
-            ctx.fillStyle = "lime";
-            ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
+            // Draw each tail segment with its specific food image
+            if (snake[i].image) {
+                ctx.drawImage(snake[i].image, snake[i].x, snake[i].y, boxSize, boxSize);
+            } else {
+                // Default color for segments without images (initial segments)
+                ctx.fillStyle = "lime";
+                ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
+            }
         }
     }
 
@@ -119,15 +120,15 @@ function drawGame() {
     // Check for collision with food
     if (Math.abs(snakeX - food.x) < boxSize && Math.abs(snakeY - food.y) < boxSize) {
         score++;
-        // Add a new segment with the current food image as the tail
-        snake.push({ x: food.x, y: food.y });
+        // Add a new segment with the current food's image as the tail
+        snake.push({ x: food.x, y: food.y, image: food.fruit.image });
         spawnFood(); // Generate new food at the right side again
     } else {
         snake.pop(); // Remove the tail if no food is eaten
     }
 
     // Add new head to the snake
-    const newHead = { x: snakeX, y: snakeY };
+    const newHead = { x: snakeX, y: snakeY, image: null };
     snake.unshift(newHead);
 
     // Check for collisions with walls or itself
