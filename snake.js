@@ -76,11 +76,17 @@ function changeDirection(event) {
 // Main game loop
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw snake
+
+    // Draw snake with tail as the last food image
     for (let i = 0; i < snake.length; i++) {
-    ctx.fillStyle = i === 0 ? "lime" : "white";
-        ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
+        if (i === snake.length - 1 && snake.length > 1) {
+            // Draw the last segment of the snake with the food image
+            ctx.drawImage(food.fruit.image, snake[i].x, snake[i].y, boxSize, boxSize);
+        } else {
+            // Draw other segments of the snake
+            ctx.fillStyle = i === 0 ? "lime" : "white";
+            ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
+        }
     }
 
     // Draw the food (fruit image)
@@ -97,18 +103,19 @@ function drawGame() {
     // Move the snake
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
-    if (direction === "UP") snakeY -= boxSize/2;
-    if (direction === "DOWN") snakeY += boxSize/2;
-    if (direction === "LEFT") snakeX -= boxSize/2;
-    if (direction === "RIGHT") snakeX += boxSize/2;
+    if (direction === "UP") snakeY -= boxSize;
+    if (direction === "DOWN") snakeY += boxSize;
+    if (direction === "LEFT") snakeX -= boxSize;
+    if (direction === "RIGHT") snakeX += boxSize;
 
     // Check for collision with food
     if (Math.abs(snakeX - food.x) < boxSize && Math.abs(snakeY - food.y) < boxSize) {
         score++;
+        // Add a new segment with the current food image position
         snake.push({ x: food.x, y: food.y });
         spawnFood(); // Generate new food at the right side again
     } else {
-        snake.pop(); // Remove the tail
+        snake.pop(); // Remove the tail if no food is eaten
     }
 
     // Add new head to the snake
@@ -141,4 +148,3 @@ function collision(head, array) {
 
 // Start the game on page load
 init();
-
