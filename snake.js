@@ -42,7 +42,7 @@ function init() {
 
     // Reset variables
     //snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
-  snake = [{ x: boxSize/2, y:  boxSize/2 }];
+  snake = [{ x: boxSize, y:  boxSize }];
   
     direction = "RIGHT";
     score = 0;
@@ -105,6 +105,7 @@ function drawGame() {
     // Check for collision with food
     if (Math.abs(snakeX - food.x) < boxSize && Math.abs(snakeY - food.y) < boxSize) {
         score++;
+        snake.push({ x: food.x, y: food.y });
         spawnFood(); // Generate new food at the right side again
     } else {
         snake.pop(); // Remove the tail
