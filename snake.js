@@ -55,7 +55,7 @@ function drawGame() {
     }
 
     // Draw and move food to the left
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "blue";
     ctx.fillRect(food.x, food.y, boxSize, boxSize);
     food.x -= food.speed; // Move food to the left
 
