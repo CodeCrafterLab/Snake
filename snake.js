@@ -21,9 +21,9 @@ const fruitImages = {
 // Set image sources
 fruitImages.apple.src = "Assets/apple.png";  // Replace with actual image URL
 fruitImages.banana.src = "Assets/banana.png";  // Replace with actual image URL
-fruitImages.grapes.src = "Assets/grapes.png";  // Replace with actual image URL
-fruitImages.orange.src = "Assets/orange.png";  // Replace with actual image URL
-fruitImages.watermelon.src = "Assets/watermelon.png";  // Replace with actual image URL
+fruitImages.grapes.src = "Assets/grape.png";  // Replace with actual image URL
+fruitImages.orange.src = "Assets/cheery.png";  // Replace with actual image URL
+fruitImages.watermelon.src = "Assets/coconut.png";  // Replace with actual image URL
 
 // List of fruit types and their corresponding image keys
 const fruits = [
