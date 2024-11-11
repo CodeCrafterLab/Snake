@@ -124,7 +124,7 @@ function drawGame() {
         snake.push({ x: food.x, y: food.y, image: food.fruit.image });
         spawnFood(); // Generate new food at the right side again
     } else {
-        snake.pop(); // Remove the tail if no food is eaten
+       // snake.pop(); // Remove the tail if no food is eaten
     }
 
     // Add new head to the snake
