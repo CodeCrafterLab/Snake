@@ -1,8 +1,14 @@
+// fruitImages.apple.src = "Assets/apple.png";  // Replace with actual image URL
+// fruitImages.banana.src = "Assets/banana.png";  // Replace with actual image URL// 
+// fruitImages.grapes.src = "Assets/grape.png";  // Replace with actual image URL
+// fruitImages.orange.src = "Assets/cheery.png";  // Replace with actual image URL
+// fruitImages.watermelon.src = "Assets/coconut.png";  // Replace with actual image URL
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Game constants
-let boxSize = 60;
+let boxSize = 20;
 let snake;
 let food;
 let direction;
@@ -19,11 +25,11 @@ const fruitImages = {
 };
 
 // Set image sources
-fruitImages.apple.src = "Assets/apple.png";  // Replace with actual image URL
-fruitImages.banana.src = "Assets/banana.png";  // Replace with actual image URL
-fruitImages.grapes.src = "Assets/grape.png";  // Replace with actual image URL
+ fruitImages.apple.src = "Assets/apple.png";  // Replace with actual image URL
+ fruitImages.banana.src = "Assets/banana.png";  // Replace with actual image URL// 
+ fruitImages.grapes.src = "Assets/grape.png";  // Replace with actual image URL
 fruitImages.orange.src = "Assets/cheery.png";  // Replace with actual image URL
-fruitImages.watermelon.src = "Assets/coconut.png";  // Replace with actual image URL
+ fruitImages.watermelon.src = "Assets/coconut.png";  // Replace with actual image URL
 
 // List of fruit types and their corresponding image keys
 const fruits = [
@@ -41,9 +47,7 @@ function init() {
     canvas.height = window.innerHeight;
 
     // Reset variables
-    //snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
-  snake = [{ x: boxSize, y:  boxSize }];
-  
+    snake = [{ x: 9 * boxSize, y: 9 * boxSize }];
     direction = "RIGHT";
     score = 0;
     spawnFood();
@@ -77,14 +81,18 @@ function changeDirection(event) {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw snake with tail as the last food image
+    // Draw snake
     for (let i = 0; i < snake.length; i++) {
-        if (i === snake.length - 1 && snake.length > 1) {
-            // Draw the last segment of the snake with the food image
+        if (i === 0) {
+            // Draw the head as a red box
+            ctx.fillStyle = "red";
+            ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
+        } else if (i === snake.length - 1 && snake.length > 1) {
+            // Draw the last segment (tail) with the food image
             ctx.drawImage(food.fruit.image, snake[i].x, snake[i].y, boxSize, boxSize);
         } else {
-            // Draw other segments of the snake
-            ctx.fillStyle = i === 0 ? "lime" : "white";
+            // Draw other segments of the snake body
+            ctx.fillStyle = "lime";
             ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
         }
     }
@@ -111,7 +119,7 @@ function drawGame() {
     // Check for collision with food
     if (Math.abs(snakeX - food.x) < boxSize && Math.abs(snakeY - food.y) < boxSize) {
         score++;
-        // Add a new segment with the current food image position
+        // Add a new segment with the current food image as the tail
         snake.push({ x: food.x, y: food.y });
         spawnFood(); // Generate new food at the right side again
     } else {
