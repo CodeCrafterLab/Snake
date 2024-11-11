@@ -7,7 +7,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Game constants
-let boxSize = 40;
+let boxSize = 20;
 let snake;
 let food;
 let direction;
@@ -27,7 +27,7 @@ const fruitImages = {
  fruitImages.apple.src = "Assets/apple.png";  // Replace with actual image URL
  fruitImages.banana.src = "Assets/banana.png";  // Replace with actual image URL// 
  fruitImages.grapes.src = "Assets/grape.png";  // Replace with actual image URL
-fruitImages.orange.src = "Assets/cheery.png";  // Replace with actual image URL
+ fruitImages.orange.src = "Assets/cheery.png";  // Replace with actual image URL
  fruitImages.watermelon.src = "Assets/coconut.png";  // Replace with actual image URL
 
 // List of fruit types and their corresponding image keys
@@ -124,7 +124,7 @@ function drawGame() {
         snake.push({ x: food.x, y: food.y, image: food.fruit.image });
         spawnFood(); // Generate new food at the right side again
     } else {
-       snake.pop(); // Remove the tail if no food is eaten
+        snake.pop(); // Remove the tail if no food is eaten
     }
 
     // Add new head to the snake
