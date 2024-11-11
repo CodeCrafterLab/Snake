@@ -79,8 +79,8 @@ function drawGame() {
     
     // Draw snake
     for (let i = 0; i < snake.length; i++) {
-        //ctx.fillStyle = i === 0 ? "lime" : "white";
-        //ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
+    ctx.fillStyle = i === 0 ? "lime" : "white";
+        ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
     }
 
     // Draw the food (fruit image)
