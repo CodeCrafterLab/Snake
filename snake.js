@@ -92,7 +92,7 @@ function drawGame() {
             ctx.drawImage(food.fruit.image, snake[i].x, snake[i].y, boxSize, boxSize);
         } else {
             // Draw other segments of the snake body
-           // ctx.fillStyle = "lime";
+            ctx.fillStyle = "lime";
             ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
         }
     }
