@@ -9,6 +9,31 @@ let direction;
 let score;
 let game;
 
+// Load images for different fruits
+const fruitImages = {
+    apple: new Image(),
+    banana: new Image(),
+    grapes: new Image(),
+    orange: new Image(),
+    watermelon: new Image(),
+};
+
+// Set image sources
+fruitImages.apple.src = "Assets/apple.png";  // Replace with actual image URL
+fruitImages.banana.src = "Assets/banana.png";  // Replace with actual image URL
+fruitImages.grapes.src = "Assets/grapes.png";  // Replace with actual image URL
+fruitImages.orange.src = "Assets/orange.png";  // Replace with actual image URL
+fruitImages.watermelon.src = "Assets/watermelon.png";  // Replace with actual image URL
+
+// List of fruit types and their corresponding image keys
+const fruits = [
+    { name: "Apple", image: fruitImages.apple },
+    { name: "Banana", image: fruitImages.banana },
+    { name: "Grapes", image: fruitImages.grapes },
+    { name: "Orange", image: fruitImages.orange },
+    { name: "Watermelon", image: fruitImages.watermelon }
+];
+
 // Initialize the game
 function init() {
     // Set canvas to full screen
@@ -26,12 +51,14 @@ function init() {
     game = setInterval(drawGame, 100);
 }
 
-// Spawn food at the right side of the screen
+// Spawn food at the right side of the screen with a random fruit image
 function spawnFood() {
+    const randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
+
     food = {
         x: canvas.width, // Start at the right edge of the screen
         y: Math.floor(Math.random() * (canvas.height / boxSize)) * boxSize,
-        speed: 5 // Set speed of movement to the left
+        fruit: randomFruit // Store the random fruit object with the image
     };
 }
 
@@ -54,10 +81,11 @@ function drawGame() {
         ctx.fillRect(snake[i].x, snake[i].y, boxSize, boxSize);
     }
 
-    // Draw and move food to the left
-    ctx.fillStyle = "blue";
-    ctx.fillRect(food.x, food.y, boxSize, boxSize);
-    food.x -= food.speed; // Move food to the left
+    // Draw the food (fruit image)
+    ctx.drawImage(food.fruit.image, food.x, food.y, boxSize, boxSize);
+
+    // Move the food to the left
+    food.x -= 5; // Move food to the left
 
     // Reset food to the right side if it goes off-screen on the left
     if (food.x + boxSize < 0) {
@@ -110,3 +138,4 @@ function collision(head, array) {
 
 // Start the game on page load
 init();
+
