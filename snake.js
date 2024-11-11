@@ -2,7 +2,7 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 // Game constants
-let boxSize = 20;
+let boxSize = 60;
 let snake;
 let food;
 let direction;
